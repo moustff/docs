@@ -1,0 +1,40 @@
+---
+title: 'Configurations'
+description: 'To use the transcription API, you need provide the following:'
+---
+
+&nbsp;
+&nbsp;
+
+## Language Support
+
+&nbsp;
+
+| Language      | Language Tag      |
+| ------------- | ----------------- |
+| Arabic        | `ar`              |
+| English       | `en`              |
+
+To specify the language for a transcription request, include the `lng` field in the request body with the appropriate language tag.
+
+## Output Formats
+
+The transcription API supports the following output formats:
+
+- `application/json`: JSON format transcription
+
+## Webhook Configurations
+
+You can provide a webhook URL in the transcription request to receive updates about the job status. The webhook will receive the following JSON payload:
+
+```json json
+{
+  "job_id": "123",
+  "status": "completed",
+  "jobResponse": "The transcribed json goes here."
+}
+```
+
+## Rate Limiting
+
+The transcription API is subject to rate limiting to ensure fair usage and maintain service quality. If you exceed the rate limit, you will receive a 429 Too Many Requests response with a Retry-After header indicating the number of seconds you should wait before making another request.
