@@ -175,7 +175,7 @@
         }
       }
     },
-    "/api/v1/user/login": {
+    "/api/v1/user/sign-in": {
       "post": {
         "summary": "Login to your account",
         "requestBody": {
