@@ -174,6 +174,52 @@
           }
         }
       }
+    },
+    "/api/v1/user/login": {
+      "post": {
+        "summary": "Login to your account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginInvalidEmailOrPasswordError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Wrong password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginMismatchPasswordError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -272,6 +318,196 @@
           },
           "message": {
             "type": "string"
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": [
+          "provider",
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "description": "The login approach",
+            "type": "string"
+          },
+          "email": {
+            "description": "The email of the user!",
+            "type": "string"
+          },
+          "password": {
+            "description": "The passowrd of the user!",
+            "type": "string"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether the login was successful"
+          },
+          "tokens": {
+            "type": "object",
+            "properties": {
+              "access": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "description": "The access token"
+                  },
+                  "expires": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The expiration date of the access token"
+                  }
+                }
+              },
+              "refresh": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "description": "The refresh token"
+                  },
+                  "expires": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The expiration date of the refresh token"
+                  }
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The user's ID"
+              },
+              "email": {
+                "type": "string",
+                "description": "The user's email"
+              },
+              "phone": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user's phone number"
+              },
+              "firstName": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user's first name"
+              },
+              "lastName": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user's last name"
+              },
+              "fullName": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user's full name"
+              },
+              "domain": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user's domain"
+              },
+              "role": {
+                "type": "string",
+                "description": "The user's role"
+              },
+              "isBlocked": {
+                "type": "boolean",
+                "description": "Whether the user is blocked"
+              },
+              "isActive": {
+                "type": "boolean",
+                "description": "Whether the user is active"
+              },
+              "isVerified": {
+                "type": "boolean",
+                "description": "Whether the user is verified"
+              },
+              "deletedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "description": "The date the user was deleted"
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user who deleted the user"
+              },
+              "status": {
+                "type": "string",
+                "description": "The user's status"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the user was created"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the user was last updated"
+              }
+            }
+          }
+        }
+      },
+      "LoginInvalidEmailOrPasswordError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "The error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message"
+          }
+        }
+      },
+      "LoginMismatchPasswordError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "The error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message"
+          },
+          "validation": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "context": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "description": "The field that caused the validation error"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string",
+                  "description": "The validation error message"
+                }
+              }
+            }
           }
         }
       }
