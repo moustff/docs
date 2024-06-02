@@ -5,7 +5,6 @@
     "dark": "/logo/hamsa_logo_dark.svg",
     "light": "/logo/hamsa_logo_light.svg"
   },
-  "openapi": ["/api-reference/auth-openapi.json"],
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#97DE00",
@@ -51,8 +50,10 @@
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/api/v1/user/signup",
-        "api-reference/endpoint/api/v1/user/login"
+        "api-reference/endpoint/get",
+        "api-reference/endpoint/create",
+        "api-reference/endpoint/delete",
+        "api-reference/endpoint/signup"
       ]
     }
   ],
