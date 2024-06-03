@@ -225,16 +225,10 @@
       "post": {
         "summary": "Refresh Access Token",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "refreshToken": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/RefreshTokensRequest"
               }
             }
           }
@@ -245,16 +239,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "accessToken": {
-                      "type": "string"
-                    },
-                    "expires": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
+                  "$ref": "#/components/schemas/RefreshTokensResponse"
                 }
               }
             }
@@ -610,6 +595,9 @@
         }
       },
       "VerifyRegisterRequest": {
+        "required": [
+          "tempToken"
+        ],
         "type": "object",
         "properties": {
           "tempToken": {
@@ -628,6 +616,29 @@
           "message": {
             "type": "string",
             "description": "Response message"
+          }
+        }
+      },
+      "RefreshTokensRequest": {
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "RefreshTokensResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "expires": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
