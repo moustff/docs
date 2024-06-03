@@ -59,7 +59,9 @@
       "group": "Auth Enpoints",
       "pages": [
         "api-reference/endpoint/signup",
-        "api-reference/endpoint/login"
+        "api-reference/endpoint/login",
+        "api-reference/endpoint/refresh-tokens",
+        "api-reference/endpoint/verify-register"
       ]
     }
   ],
