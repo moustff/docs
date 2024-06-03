@@ -63,6 +63,13 @@
         "api-reference/endpoint/refresh-tokens",
         "api-reference/endpoint/verify-register"
       ]
+    },
+    {
+      "group": "Project Enpoints",
+      "pages": [
+        "api-reference/endpoint/create-project",
+        "api-reference/endpoint/get-projects"
+      ]
     }
   ],
   "footerSocials": {
