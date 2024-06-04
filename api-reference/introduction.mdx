@@ -1,28 +1,28 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'API documentation for the Hamsa API'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  This section contains the API reference documentation for the Hamsa API. 
 </Note>
 
 ## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+This API reference documentation uses the OpenAPI specification to define the available endpoints and their respective request and response schemas for the Hamsa API.
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="Hamsa API Endpoints"
+  icon="code"
+  href="https://github.com/your-org/your-repo/blob/main/api-reference/openapi.json"
 >
+
   View the OpenAPI specification file
 </Card>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+The Hamsa API uses Bearer token authentication for most of its endpoints. The authentication scheme is defined in the OpenAPI specification as follows:
 
 ```json
 "security": [
@@ -31,3 +31,24 @@ All API endpoints are authenticated using Bearer tokens and picked up from the s
   }
 ]
 ```
+
+To authenticate your requests, you'll need to include a valid Bearer token in the Authorization header. You can obtain a Bearer token by following the appropriate authentication flow, which is documented in the Authentication section.
+
+## Endpoints
+
+The Hamsa API provides the following sections:
+- Authetication section.
+- Payment and billing section.
+- Transcription section.
+- Project section.
+- API keys section.
+- Statistics section.
+- Project members section.
+- Activity section.
+- Jobs section
+
+<Note>Those section will be updated if something new was introduced.</Note>
+
+Each endpoint of those sections is described in detail in the corresponding section of this API reference documentation.
+
+**_If you have any questions or issues, please don't hesitate to reach out to the Hamsa API team._**
