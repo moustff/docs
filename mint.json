@@ -68,7 +68,8 @@
       "group": "Project Enpoints",
       "pages": [
         "api-reference/endpoint/create-project",
-        "api-reference/endpoint/get-projects"
+        "api-reference/endpoint/get-projects",
+        "api-reference/endpoint/get-project-users"
       ]
     }
   ],
