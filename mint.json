@@ -69,7 +69,9 @@
     {
       "group": "Project Members Enpoints",
       "pages": [
-        "api-reference/endpoint/invite-member"
+        "api-reference/endpoint/invite-member",
+        "api-reference/endpoint/delete-member",
+        "api-reference/endpoint/update-member-role"
       ]
     }
   ],
