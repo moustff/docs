@@ -314,6 +314,65 @@
             }
           }
         }
+      },
+      "patch": {
+        "summary": "Update Project Name",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProjectRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProjectResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     },
     "/api/v1/project/user": {
@@ -370,6 +429,77 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/project/invitation": {
+      "post": {
+        "summary": "Invite User to Project",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful invitation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InviteUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -895,6 +1025,137 @@
             "properties": {
               "isDeleted": {
                 "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "UpdateProjectRequest": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The new name of the project"
+          }
+        }
+      },
+      "UpdateProjectResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "description": "Whether there was an error"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The project ID"
+              },
+              "name": {
+                "type": "string",
+                "description": "The project name"
+              },
+              "deletedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "description": "The date the project was deleted"
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user who deleted the project"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the project was created"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the project was last updated"
+              }
+            }
+          }
+        }
+      },
+      "InviteUserRequest": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": [
+              "ADMIN",
+              "USER",
+              "OWNER"
+            ],
+            "description": "The role of the user in the project"
+          },
+          "userEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "The email of the user to be invited"
+          }
+        },
+        "required": [
+          "role",
+          "userEmail"
+        ]
+      },
+      "InviteUserResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "description": "Whether there was an error"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The invitation ID"
+              },
+              "userId": {
+                "type": "string",
+                "description": "The user ID"
+              },
+              "projectId": {
+                "type": "string",
+                "description": "The project ID"
+              },
+              "role": {
+                "type": "string",
+                "description": "The role of the user in the project"
+              },
+              "isVerified": {
+                "type": "boolean",
+                "description": "Whether the invitation has been verified"
+              },
+              "deletedAt": {
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "description": "The date the invitation was deleted"
+              },
+              "deletedBy": {
+                "type": "string",
+                "nullable": true,
+                "description": "The user who deleted the invitation"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the invitation was created"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the invitation was last updated"
               }
             }
           }
