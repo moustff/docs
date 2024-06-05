@@ -278,7 +278,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteProjectResponse"
+                  "$ref": "#/components/schemas/DeleteWithCountResponse"
                 }
               }
             }
@@ -457,7 +457,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeleteMemberResponse"
+                  "$ref": "#/components/schemas/DeleteWithCountResponse"
                 }
               }
             }
@@ -639,62 +639,188 @@
           }
         ]
       }
+    },
+    "/api/v1/project/api-key": {
+      "get": {
+        "summary": "List API Keys",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "required": false
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful listing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListApiKeysResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create an API Key",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateApiKeyResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete API Key",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteApiKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful deletion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteWithCountResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      },
       "SignupRequest": {
         "required": [
           "email",
@@ -1152,7 +1278,7 @@
           }
         }
       },
-      "DeleteProjectResponse": {
+      "DeleteWithCountResponse": {
         "type": "object",
         "properties": {
           "error": {
@@ -1311,24 +1437,6 @@
           "memberId"
         ]
       },
-      "DeleteMemberResponse": {
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "description": "Whether there was an error"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "isDeleted": {
-                "type": "boolean",
-                "description": "Whether the member was successfully deleted"
-              }
-            }
-          }
-        }
-      },
       "UpdateMemberRoleRequest": {
         "type": "object",
         "properties": {
@@ -1350,6 +1458,155 @@
           "memberId",
           "role"
         ]
+      },
+      "CreateApiKeyRequest": {
+        "type": "object",
+        "properties": {
+          "expiredAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The expiration date of the API key, timestamp in milliseconds"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the API key"
+          }
+        },
+        "required": [
+          "expiredAt",
+          "name"
+        ]
+      },
+      "CreateApiKeyResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "description": "Whether there was an error"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "The API key ID"
+              },
+              "expiredAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The expiration date of the API key"
+              },
+              "token": {
+                "type": "string",
+                "description": "The API key token"
+              },
+              "userId": {
+                "type": "string",
+                "description": "The user ID associated with the API key"
+              },
+              "isValid": {
+                "type": "boolean",
+                "description": "Whether the API key is valid"
+              },
+              "status": {
+                "type": "string",
+                "description": "The status of the API key"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the API key was created"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the API key was last updated"
+              }
+            }
+          }
+        }
+      },
+      "DeleteApiKeyRequest": {
+        "type": "object",
+        "properties": {
+          "apiKeyId": {
+            "type": "string",
+            "description": "The ID of the API key to be deleted"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the API key"
+          }
+        },
+        "required": [
+          "apiKeyId",
+          "name"
+        ]
+      },
+      "ApiKeyDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The API key ID"
+          },
+          "key": {
+            "type": "string",
+            "description": "The API key token"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the API key"
+          },
+          "userId": {
+            "type": "string",
+            "description": "The user ID associated with the API key"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The expiration date of the API key"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the API key was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date the API key was last updated"
+          }
+        }
+      },
+      "ListApiKeysResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "description": "Whether there was an error"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "apiKeys": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ApiKeyDetails"
+                },
+                "description": "The list of API keys"
+              },
+              "total": {
+                "type": "integer",
+                "description": "The total number of API keys"
+              },
+              "filtered": {
+                "type": "integer",
+                "description": "The number of API keys after applying the filters"
+              }
+            }
+          }
+        }
       }
     },
     "securitySchemes": {

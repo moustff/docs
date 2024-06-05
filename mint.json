@@ -73,6 +73,14 @@
         "api-reference/endpoint/delete-member",
         "api-reference/endpoint/update-member-role"
       ]
+    },
+    {
+      "group": "API Keys Enpoints",
+      "pages": [
+        "api-reference/endpoint/list-api-keys",
+        "api-reference/endpoint/create-api-key",
+        "api-reference/endpoint/delete-api-key"
+      ]
     }
   ],
   "footerSocials": {
