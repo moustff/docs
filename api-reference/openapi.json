@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Hamsa API",
+    "description": "Trying out our transcription and media-to-text APIs",
     "license": {
       "name": "MIT"
     },
@@ -817,6 +817,166 @@
           }
         ]
       }
+    },
+    "/api/v1/project/statistics/numbers": {
+      "get": {
+        "summary": "Get project statistics with numbers",
+        "parameters": [
+          {
+            "name": "startPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": true
+          },
+          {
+            "name": "endPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": true
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/project/statistics/chart": {
+      "get": {
+        "summary": "Get project statistics chart data",
+        "parameters": [
+          {
+            "name": "startPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": true
+          },
+          {
+            "name": "endPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": true
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChartResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1605,6 +1765,98 @@
                 "description": "The number of API keys after applying the filters"
               }
             }
+          }
+        }
+      },
+      "StatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/StatisticsData"
+          }
+        }
+      },
+      "StatisticsData": {
+        "type": "object",
+        "properties": {
+          "requests": {
+            "$ref": "#/components/schemas/StatisticItem"
+          },
+          "transcription": {
+            "$ref": "#/components/schemas/StatisticItem"
+          },
+          "tokens": {
+            "$ref": "#/components/schemas/StatisticItem"
+          }
+        }
+      },
+      "StatisticItem": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "integer"
+          },
+          "isTimeValue": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ChartResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ChartData"
+          }
+        }
+      },
+      "ChartData": {
+        "type": "object",
+        "properties": {
+          "cost": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChartDataItem"
+            }
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChartDataItem"
+            }
+          },
+          "transcription": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChartDataItem"
+            }
+          },
+          "tokens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChartDataItem"
+            }
+          }
+        }
+      },
+      "ChartDataItem": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "number"
           }
         }
       }

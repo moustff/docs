@@ -33,4 +33,5 @@
   - Routes of the project, not in any child directory.
   - Project Settings Directory.
   - Members Directory.
+  - API Keys Directory.
   - 

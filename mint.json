@@ -81,6 +81,13 @@
         "api-reference/endpoint/create-api-key",
         "api-reference/endpoint/delete-api-key"
       ]
+    },
+    {
+      "group": "API Statistics Routes",
+      "pages": [
+        "api-reference/endpoint/statistics-numbers",
+        "api-reference/endpoint/statistics-chart"
+      ]
     }
   ],
   "footerSocials": {
