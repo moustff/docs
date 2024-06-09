@@ -22,33 +22,24 @@ This API reference documentation uses the OpenAPI specification to define the av
 
 ## Authentication
 
-The Hamsa API uses Bearer token authentication for most of its endpoints. The authentication scheme is defined in the OpenAPI specification as follows:
+The Hamsa media-to-text APIs use <b>API Key token authentication</b>. The authentication scheme is used in the request <b>Headers</b> as follows:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+Authorization: Token <API Key Id>
 ```
 
-To authenticate your requests, you'll need to include a valid Bearer token in the Authorization header. You can obtain a Bearer token by following the appropriate authentication flow, which is documented in the Authentication section.
+To authenticate your requests, you'll need to include a valid API key token in the Authorization header. You can obtain an API key token by following the appropriate authentication flow, which is documented in the <a href="/auth">Authentication</a> section.
 
 ## Endpoints
 
 The Hamsa API provides the following sections:
-- Authetication section.
-- Payment and billing section.
-- Transcription section.
-- Project section.
-- API keys section.
-- Statistics section.
-- Project members section.
-- Activity section.
-- Jobs section
+- Transcription (Media To Text) Route.
+- Jobs List Route.
+- Usage Routes With Two Formats.
+- Get Current Project Route.
 
-<Note>Those section will be updated if something new was introduced.</Note>
+<Note>Those sections will be updated if something new was introduced.</Note>
 
-Each endpoint of those sections is described in detail in the corresponding section of this API reference documentation.
+Each endpoint of those sections is described in detail in the corresponding tab of this API reference documentation.
 
-**_If you have any questions or issues, please don't hesitate to reach out to the Hamsa API team._**
+<Note>If you have any questions or issues, please don't hesitate to reach out to the Hamsa API team.</Note>

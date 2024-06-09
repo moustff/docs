@@ -37,8 +37,8 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "setup",
-        "configurations"
+        "auth",
+        "create-api-keys"
       ]
     },
     {
