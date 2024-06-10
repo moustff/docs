@@ -171,6 +171,119 @@
           }
         ]
       }
+    },
+    "/api/v1/hamsa/transcript": {
+      "post": {
+        "summary": "Transcribe media to text",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriptRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranscriptResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/job/all": {
+      "post": {
+        "summary": "Get a list of jobs",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -275,6 +388,231 @@
           },
           "value": {
             "type": "number"
+          }
+        }
+      },
+      "TranscriptRequest": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "jobType": {
+            "type": "string",
+            "enum": [
+              "async"
+            ]
+          },
+          "summary": {
+            "type": "boolean"
+          },
+          "keywordExtraction": {
+            "type": "boolean"
+          },
+          "speakerDZ": {
+            "type": "boolean"
+          },
+          "translation": {
+            "type": "string",
+            "enum": [
+              "ar",
+              "en",
+              "null"
+            ]
+          },
+          "model": {
+            "type": "string",
+            "enum": [
+              "Hamsa"
+            ]
+          },
+          "webhookUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "article": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "url",
+          "jobType",
+          "model",
+          "summary",
+          "keywordExtraction",
+          "speakerDZ",
+          "translation",
+          "webhookUrl",
+          "article"
+        ]
+      },
+      "TranscriptResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "previewUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "tokenId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "JobsRequest": {
+        "type": "object",
+        "properties": {
+          "sort": {
+            "$ref": "#/components/schemas/SortOptions"
+          },
+          "take": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "skip": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Completed"
+            ]
+          }
+        },
+        "required": [
+          "sort",
+          "take",
+          "skip"
+        ]
+      },
+      "SortOptions": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": [
+              "createdAt",
+              "model",
+              "jobType",
+              "totalCost",
+              "usageTime",
+              "lng",
+              "status"
+            ]
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        },
+        "required": [
+          "field",
+          "direction"
+        ]
+      },
+      "JobsResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/JobsData"
+          }
+        }
+      },
+      "JobsData": {
+        "type": "object",
+        "properties": {
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Job"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "filtered": {
+            "type": "integer"
+          }
+        }
+      },
+      "Job": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "jobType": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "boolean"
+          },
+          "keywordExtraction": {
+            "type": "boolean"
+          },
+          "speakerDZ": {
+            "type": "boolean"
+          },
+          "translation": {
+            "type": "boolean"
+          },
+          "article": {
+            "type": "boolean"
+          },
+          "webhookUrl": {
+            "type": "string"
+          },
+          "previewUrl": {
+            "type": "string"
+          },
+          "totalCost": {
+            "type": "number"
+          },
+          "usageTime": {
+            "type": "string"
+          },
+          "lng": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "apiKeyId": {
+            "type": "string"
+          },
+          "jobResponse": {
+            "type": "object"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }

@@ -48,6 +48,18 @@
       ]
     },
     {
+      "group": "Transcription Routes",
+      "pages": [
+        "api-reference/endpoint/transcript"
+      ]
+    },
+    {
+      "group": "Job Routes",
+      "pages": [
+        "api-reference/endpoint/get-jobs-list"
+      ]
+    },
+    {
       "group": "API Statistics Routes",
       "pages": [
         "api-reference/endpoint/statistics-numbers",
