@@ -41,8 +41,7 @@
             "in": "query",
             "schema": {
               "type": "string"
-            },
-            "required": true
+            }
           }
         ],
         "responses": {
@@ -89,7 +88,7 @@
         },
         "security": [
           {
-            "BearerAuth": []
+            "ApiKeyAuth": []
           }
         ]
       }
@@ -121,8 +120,7 @@
             "in": "query",
             "schema": {
               "type": "string"
-            },
-            "required": true
+            }
           }
         ],
         "responses": {
@@ -169,7 +167,7 @@
         },
         "security": [
           {
-            "BearerAuth": []
+            "ApiKeyAuth": []
           }
         ]
       }
@@ -282,9 +280,11 @@
       }
     },
     "securitySchemes": {
-      "BearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Pass the API key as a Bearer token in the Authorization header, You need to put Token keyword before the API key. e.g. 'Authorization: Token <api-key>'"
       }
     }
   }
