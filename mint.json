@@ -48,41 +48,6 @@
       ]
     },
     {
-      "group": "Auth Enpoints",
-      "pages": [
-        "api-reference/endpoint/signup",
-        "api-reference/endpoint/login",
-        "api-reference/endpoint/refresh-tokens",
-        "api-reference/endpoint/verify-register"
-      ]
-    },
-    {
-      "group": "Project Enpoints",
-      "pages": [
-        "api-reference/endpoint/create-project",
-        "api-reference/endpoint/get-projects",
-        "api-reference/endpoint/delete-project",
-        "api-reference/endpoint/get-project-users",
-        "api-reference/endpoint/update-project-name"
-      ]
-    },
-    {
-      "group": "Project Members Enpoints",
-      "pages": [
-        "api-reference/endpoint/invite-member",
-        "api-reference/endpoint/delete-member",
-        "api-reference/endpoint/update-member-role"
-      ]
-    },
-    {
-      "group": "API Keys Enpoints",
-      "pages": [
-        "api-reference/endpoint/list-api-keys",
-        "api-reference/endpoint/create-api-key",
-        "api-reference/endpoint/delete-api-key"
-      ]
-    },
-    {
       "group": "API Statistics Routes",
       "pages": [
         "api-reference/endpoint/statistics-numbers",
