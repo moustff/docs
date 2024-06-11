@@ -60,6 +60,12 @@
       ]
     },
     {
+      "group": "Project Routes",
+      "pages": [
+        "api-reference/endpoint/get-project-by-api-key"
+      ]
+    },
+    {
       "group": "API Statistics Routes",
       "pages": [
         "api-reference/endpoint/statistics-numbers",
