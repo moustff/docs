@@ -50,7 +50,7 @@
     {
       "group": "Transcription Routes",
       "pages": [
-        "api-reference/endpoint/transcript"
+        "api-reference/endpoint/transcribe"
       ]
     },
     {
