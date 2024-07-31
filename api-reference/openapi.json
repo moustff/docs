@@ -295,6 +295,66 @@
             "ApiKeyAuth": []
           }
         ]
+      },
+      "get": {
+        "summary": "Get AI-generated content",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
       }
     },
     "/api/v1/job/all": {
@@ -375,6 +435,109 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/modify-options": {
+      "get": {
+        "summary": "Modify AI-generated content options",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "option",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "longer",
+                "shorter",
+                "casual",
+                "serious",
+                "original"
+              ]
+            }
+          },
+          {
+            "name": "aiPart",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "introduction",
+                "titles",
+                "shortTitles",
+                "summary",
+                "keywords",
+                "keyTopicsWithBullets",
+                "faq",
+                "webArticleSEOFriendly",
+                "emailNewsletter",
+                "threadsByInstagram",
+                "youtubeDescription",
+                "facebookPost",
+                "twitterThread",
+                "linkedInPost",
+                "clipFinder",
+                "reelScript"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModifyOptionsSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {
               "application/json": {
                 "schema": {
@@ -874,6 +1037,150 @@
               "updatedAt": {
                 "type": "string",
                 "format": "date-time"
+              }
+            }
+          }
+        }
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "runpodId": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "processingType": {
+                "type": "string"
+              },
+              "webhookUrl": {
+                "type": "string"
+              },
+              "totalCost": {
+                "type": "number"
+              },
+              "usageTime": {
+                "type": "string"
+              },
+              "fromLng": {
+                "type": "string"
+              },
+              "toLng": {
+                "type": "string"
+              },
+              "mediaUrl": {
+                "type": "string"
+              },
+              "jobResponse": {
+                "type": "object",
+                "properties": {
+                  "faq": {
+                    "type": "string"
+                  },
+                  "titles": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "keywords": {
+                    "type": "string"
+                  },
+                  "clipFinder": {
+                    "type": "string"
+                  },
+                  "reelScript": {
+                    "type": "string"
+                  },
+                  "shortTitles": {
+                    "type": "string"
+                  },
+                  "facebookPost": {
+                    "type": "string"
+                  },
+                  "introduction": {
+                    "type": "string"
+                  },
+                  "linkedInPost": {
+                    "type": "string"
+                  },
+                  "twitterThread": {
+                    "type": "string"
+                  },
+                  "emailNewsletter": {
+                    "type": "string"
+                  },
+                  "threadsByInstagram": {
+                    "type": "string"
+                  },
+                  "transcriptionJobId": {
+                    "type": "string"
+                  },
+                  "youtubeDescription": {
+                    "type": "string"
+                  },
+                  "keyTopicsWithBullets": {
+                    "type": "string"
+                  },
+                  "webArticleSEOFriendly": {
+                    "type": "string"
+                  }
+                }
+              },
+              "status": {
+                "type": "string"
+              },
+              "relevantJobId": {
+                "type": "string"
+              },
+              "apiKeyId": {
+                "type": "string"
+              },
+              "billingId": {
+                "type": "string"
+              },
+              "systemModelKey": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      },
+      "ModifyOptionsSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "modifiedText": {
+                "type": "string"
               }
             }
           }

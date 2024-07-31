@@ -56,7 +56,9 @@
     {
       "group": "AI Content Routes",
       "pages": [
-        "api-reference/endpoint/post-ai-content"
+        "api-reference/endpoint/post-ai-content",
+        "api-reference/endpoint/get-ai-content",
+        "api-reference/endpoint/modify-ai-content-part"
       ]
     },
     {
