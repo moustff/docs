@@ -54,6 +54,12 @@
       ]
     },
     {
+      "group": "AI Content Routes",
+      "pages": [
+        "api-reference/endpoint/post-ai-content"
+      ]
+    },
+    {
       "group": "Job Routes",
       "pages": [
         "api-reference/endpoint/get-jobs-list"

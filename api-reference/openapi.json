@@ -41,7 +41,8 @@
             "in": "query",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -50,7 +51,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StatisticsResponse"
+                  "$ref": "#/components/schemas/NumbersStatisticsResponse"
                 }
               }
             }
@@ -120,7 +121,8 @@
             "in": "query",
             "schema": {
               "type": "string"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -214,6 +216,78 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/ai-content": {
+      "post": {
+        "summary": "Create AI Content",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AiContentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -243,8 +317,7 @@
                 "$ref": "#/components/schemas/JobsRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -421,6 +494,34 @@
           },
           "value": {
             "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          }
+        }
+      },
+      "NumbersStatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "tokens": {
+                "type": "integer"
+              },
+              "transcription": {
+                "type": "number"
+              },
+              "price": {
+                "type": "number"
+              },
+              "requests": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -454,6 +555,7 @@
           }
         },
         "required": [
+          "mediaUrl",
           "model"
         ]
       },
@@ -493,19 +595,26 @@
             "type": "integer",
             "minimum": 1
           },
+          "search": {
+            "type": "string"
+          },
           "status": {
             "type": "string",
             "enum": [
               "Pending",
               "Completed"
             ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "TRANSCRIPTION",
+              "TRANSLATION",
+              "TTS",
+              "AI_CONTENT"
+            ]
           }
-        },
-        "required": [
-          "sort",
-          "take",
-          "skip"
-        ]
+        }
       },
       "SortOptions": {
         "type": "object",
@@ -529,11 +638,7 @@
               "desc"
             ]
           }
-        },
-        "required": [
-          "field",
-          "direction"
-        ]
+        }
       },
       "JobsResponse": {
         "type": "object",
@@ -569,56 +674,55 @@
           "id": {
             "type": "string"
           },
-          "model": {
+          "title": {
             "type": "string"
           },
-          "jobType": {
-            "type": "string"
-          },
-          "summary": {
-            "type": "boolean"
-          },
-          "keywordExtraction": {
-            "type": "boolean"
-          },
-          "speakerDZ": {
-            "type": "boolean"
-          },
-          "translation": {
-            "type": "boolean"
-          },
-          "article": {
-            "type": "boolean"
-          },
-          "webhookUrl": {
-            "type": "string"
-          },
-          "previewUrl": {
-            "type": "string"
-          },
-          "totalCost": {
-            "type": "number"
-          },
-          "usageTime": {
-            "type": "string"
-          },
-          "lng": {
-            "type": "string"
+          "type": {
+            "type": "string",
+            "enum": [
+              "AI_CONTENT",
+              "TRANSCRIPTION"
+            ]
           },
           "url": {
-            "type": "string"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "apiKeyId": {
-            "type": "string"
-          },
-          "jobResponse": {
-            "type": "object"
+            "type": "string",
+            "format": "uri"
           },
           "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "COMPLETED"
+            ]
+          },
+          "cost": {
+            "type": "number"
+          },
+          "systemModelKey": {
             "type": "string"
+          },
+          "relevantJobId": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "apiKey": {
+                "type": "string"
+              },
+              "mediaUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "model": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "apiKey",
+              "mediaUrl",
+              "model"
+            ]
           },
           "createdAt": {
             "type": "string",
@@ -628,7 +732,20 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "required": [
+          "id",
+          "title",
+          "type",
+          "url",
+          "status",
+          "cost",
+          "systemModelKey",
+          "relevantJobId",
+          "attributes",
+          "createdAt",
+          "updatedAt"
+        ]
       },
       "ProjectResponse": {
         "type": "object",
@@ -666,6 +783,99 @@
           "updteAt": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "AiContentResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "msg": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "runpodId": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "AI_CONTENT"
+                ]
+              },
+              "processingType": {
+                "type": "string"
+              },
+              "webhookUrl": {
+                "type": "string"
+              },
+              "totalCost": {
+                "type": "number"
+              },
+              "usageTime": {
+                "type": "string"
+              },
+              "fromLng": {
+                "type": "string"
+              },
+              "toLng": {
+                "type": "string"
+              },
+              "mediaUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "jobResponse": {
+                "type": "object"
+              },
+              "fromScript": {
+                "type": "string"
+              },
+              "toScript": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "PENDING",
+                  "COMPLETED",
+                  "FAILED"
+                ]
+              },
+              "relevantJobId": {
+                "type": "string"
+              },
+              "apiKeyId": {
+                "type": "string"
+              },
+              "billingId": {
+                "type": "string"
+              },
+              "systemModelKey": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
           }
         }
       }
