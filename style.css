@@ -1,0 +1,3 @@
+#navbar > div > div > div > div:nth-child(3) > div {
+  display: none !important;
+}

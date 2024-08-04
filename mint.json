@@ -9,7 +9,7 @@
   "colors": {
     "primary": "#97DE00",
     "light": "#608e00",
-    "dark": "#0D9373",
+    "dark": "#284016",
     "anchors": {
       "from": "#0D9373",
       "to": "#07C983"
@@ -81,6 +81,7 @@
       ]
     }
   ],
+  "theme": "venus",
   "footerSocials": {
     "x": "https://x.com/",
     "github": "https://github.com/",
