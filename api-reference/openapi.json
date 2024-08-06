@@ -553,6 +553,289 @@
           }
         ]
       }
+    },
+    "/api/v1/ai-content/custom": {
+      "post": {
+        "summary": "Generate Customized AI Content",
+        "description": "Generates AI content based on the specified transcription job ID and parameters.",
+        "operationId": "generateCustomizedAIContent",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aiParts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "introduction",
+                        "titles",
+                        "shortTitles",
+                        "summary",
+                        "keywords",
+                        "keyTopicsWithBullets",
+                        "faq",
+                        "webArticleSEOFriendly",
+                        "emailNewsletter",
+                        "threadsByInstagram",
+                        "youtubeDescription",
+                        "facebookPost",
+                        "twitterThread",
+                        "linkedInPost",
+                        "clipFinder",
+                        "reelScript"
+                      ]
+                    }
+                  },
+                  "prompts": {
+                    "type": "object",
+                    "description": "Prompts are option, and it must end with 'Diarization: {diarization}, Language: {language}'",
+                    "properties": {
+                      "introduction": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "titles": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "shortTitles": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "summary": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "keywords": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "keyTopicsWithBullets": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "faq": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "webArticleSEOFriendly": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "emailNewsletter": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "threadsByInstagram": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "youtubeDescription": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "facebookPost": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "twitterThread": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "linkedInPost": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "clipFinder": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      },
+                      "reelScript": {
+                        "type": "string",
+                        "pattern": ".*Diarization: \\{diarization\\}, Language: \\{language\\}.*"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "webhookUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "aiParts"
+                ]
+              }
+            }
+          },
+          "description": "Parameters for generating AI content."
+        },
+        "responses": {
+          "200": {
+            "description": "AI Content job is being generated!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "boolean"
+                    },
+                    "msg": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "model": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "processingType": {
+                          "type": "string"
+                        },
+                        "webhookUrl": {
+                          "type": "string"
+                        },
+                        "totalCost": {
+                          "type": "number"
+                        },
+                        "usageTime": {
+                          "type": "string"
+                        },
+                        "fromLng": {
+                          "type": "string"
+                        },
+                        "toLng": {
+                          "type": "string"
+                        },
+                        "mediaUrl": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "jobResponse": {
+                          "type": "object"
+                        },
+                        "fromScript": {
+                          "type": "string"
+                        },
+                        "toScript": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "relevantJobId": {
+                          "type": "string"
+                        },
+                        "apiKeyId": {
+                          "type": "string"
+                        },
+                        "billingId": {
+                          "type": "string"
+                        },
+                        "systemModelKey": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "boolean"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "boolean"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "boolean"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
