@@ -780,15 +780,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean"
-                    },
-                    "msg": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ErrorSchema"
                 }
               }
             }
@@ -798,15 +790,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "boolean"
-                    },
-                    "msg": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ErrorSchema"
                 }
               }
             }
@@ -816,15 +800,79 @@
             "content": {
               "application/json": {
                 "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/ai-content/estimate": {
+      "get": {
+        "summary": "Estimate AI Content Cost",
+        "description": "Returns the estimated cost for the specified AI content job.",
+        "operationId": "estimateAIContentCost",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cost estimate retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "object",
                   "properties": {
                     "error": {
                       "type": "boolean"
                     },
-                    "msg": {
-                      "type": "string"
+                    "data": {
+                      "type": "number"
                     }
                   }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorSchema"
                 }
               }
             }
